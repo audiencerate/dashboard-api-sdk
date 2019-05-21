@@ -1,0 +1,38 @@
+group 'com.audiencerate'
+version '1.0.0'
+
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+
+sourceCompatibility = 1.8
+
+
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.opensourceagility.com/release" }
+    maven { url "http://repo.spring.io/libs-milestone" }
+    maven { url "http://repo.spring.io/libs-snapshot" }
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.12.1'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-cognitoidentity', version: '1.11.543'
+    compile group: 'com.amazonaws', name: 'aws-java-sdk-cognitoidp', version: '1.11.543'
+    testCompile 'com.github.mlk:assortmentofjunitrules:1.5.39'
+
+
+
+}
+

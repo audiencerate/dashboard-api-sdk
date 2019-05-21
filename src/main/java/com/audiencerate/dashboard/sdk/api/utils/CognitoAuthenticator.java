@@ -1,0 +1,108 @@
+package com.audiencerate.dashboard.sdk.api.utils;
+
+import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
+import com.amazonaws.services.cognitoidp.model.AuthFlowType;
+import com.amazonaws.services.cognitoidp.model.AuthenticationResultType;
+import com.amazonaws.services.cognitoidp.model.InitiateAuthRequest;
+import com.amazonaws.services.cognitoidp.model.InitiateAuthResult;
+import com.audiencerate.dashboard.sdk.api.DashboardAPI;
+import com.audiencerate.dashboard.sdk.api.models.DashboardCredentials;
+import okhttp3.Authenticator;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.Route;
+import java.util.HashMap;
+
+/**
+ * Created by Alex Sangiuliuano
+ */
+public class CognitoAuthenticator implements Authenticator
+{
+    private DashboardCredentials credentials;
+    private String clientId;
+    private AWSCognitoIdentityProvider client;
+    private String header = "Authentication";
+
+
+    public CognitoAuthenticator(DashboardCredentials credentials, String clientId,  AWSCognitoIdentityProvider client)
+    {
+        this.credentials = credentials;
+        this.clientId = clientId;
+        this.client = client;
+    }
+
+    @Override
+    public Request authenticate(Route route, Response response)
+    {
+        Request fixedRequest = response.request();
+
+        if (response.code() == 401 && response.request().header(header) == null)
+        {
+            HashMap authParams = new HashMap<>();
+            authParams.put("USERNAME", credentials.getEmail());
+            authParams.put("PASSWORD", credentials.getPassword());
+
+            InitiateAuthRequest authRequest = new InitiateAuthRequest();
+            authRequest.addAuthParametersEntry("USERNAME", credentials.getEmail());
+            authRequest.addAuthParametersEntry("PASSWORD", credentials.getPassword());
+            authRequest.setClientId(clientId);
+            authRequest.setAuthFlow(AuthFlowType.USER_PASSWORD_AUTH);
+
+            InitiateAuthResult result = null;
+
+            try
+            {
+                result = client.initiateAuth(authRequest);
+            }
+            catch (RuntimeException e)
+            {
+                System.out.println("Login Error: " + e.getMessage());
+                return null;
+            }
+
+            AuthenticationResultType authenticationResult = result.getAuthenticationResult();
+            DashboardAPI.accessToken = authenticationResult.getAccessToken();
+            DashboardAPI.tokenId = authenticationResult.getIdToken();
+            DashboardAPI.refreshToken = authenticationResult.getRefreshToken();
+
+            fixedRequest = response.request().newBuilder().removeHeader(header)
+                    .addHeader(header, DashboardAPI.tokenId)
+                    .build();
+
+            return fixedRequest;
+
+        }
+
+        if (response.code() == 401 && response.request().header(header) != null)
+        {
+            InitiateAuthRequest authRequest = new InitiateAuthRequest();
+            authRequest.addAuthParametersEntry("REFRESH_TOKEN", DashboardAPI.refreshToken);
+            authRequest.setClientId(clientId);
+            authRequest.setAuthFlow(AuthFlowType.REFRESH_TOKEN_AUTH);
+
+            InitiateAuthResult initiateAuthResult = null;
+
+            try
+            {
+                initiateAuthResult = client.initiateAuth(authRequest);
+            }
+            catch (RuntimeException e)
+            {
+                System.out.println("Login Error: " + e.getMessage());
+                return null;
+            }
+            AuthenticationResultType authenticationResult = initiateAuthResult.getAuthenticationResult();
+            DashboardAPI.accessToken = authenticationResult.getAccessToken();
+            DashboardAPI.refreshToken = authenticationResult.getRefreshToken();
+            DashboardAPI.tokenId = authenticationResult.getIdToken();
+
+            fixedRequest = response.request().newBuilder().removeHeader(header)
+                    .addHeader(header, DashboardAPI.tokenId)
+                    .build();
+
+            return fixedRequest;
+        }
+
+        return fixedRequest;
+    }
+}
