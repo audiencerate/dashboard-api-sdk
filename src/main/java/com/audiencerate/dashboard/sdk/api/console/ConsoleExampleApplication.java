@@ -21,6 +21,7 @@ public class ConsoleExampleApplication
 {
     public static void main(String... args)
     {
+
         /*** This is a console application built as tutorial ***/
 
         /*** First Step: Cognito Login: ***/
