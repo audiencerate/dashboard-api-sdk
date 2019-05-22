@@ -16,6 +16,7 @@ import java.util.Map;
 /**
  * Created by Alex Sangiuliuano
  */
+
 public class ConsoleExampleApplication
 {
     public static void main(String... args)
