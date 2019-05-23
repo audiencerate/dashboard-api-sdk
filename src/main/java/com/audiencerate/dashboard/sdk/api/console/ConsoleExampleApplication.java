@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Alex Sangiuliuano
+ * Created by Alex Sangiuliano
  */
 
 public class ConsoleExampleApplication

@@ -14,7 +14,7 @@ import okhttp3.Route;
 import java.util.HashMap;
 
 /**
- * Created by Alex Sangiuliuano
+ * Created by Alex Sangiuliano
  */
 public class CognitoAuthenticator implements Authenticator
 {

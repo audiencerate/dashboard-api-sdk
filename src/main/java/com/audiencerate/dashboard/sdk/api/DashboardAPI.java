@@ -173,7 +173,7 @@ public class DashboardAPI
             }
             //TODO: handle 403 error from dash
             else {
-                throw new DashboardHttpException("Response with status code: " + response.code(), response.code());
+                throw new DashboardHttpException("Response with status code: " + response.message(), response.code());
             }
 
         }
