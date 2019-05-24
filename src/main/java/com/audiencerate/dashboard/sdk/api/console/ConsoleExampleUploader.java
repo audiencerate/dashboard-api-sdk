@@ -1,11 +1,11 @@
 package com.audiencerate.dashboard.sdk.api.console;
 
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.BasicSessionCredentials;
 import com.amazonaws.regions.Regions;
+import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
@@ -159,10 +159,14 @@ public class ConsoleExampleUploader
 
             DashboardCredentials credentials = new DashboardCredentials(email, password, Regions.US_EAST_1);
 
-            DashboardAPI dashboardAPI = DashboardAPI.newBuilder()
-                    .withClientId(clientId)
-                    .withCredentials(credentials)
+            DashboardAPI dashboardAPI  = DashboardAPI.newBuilder()
                     .withEndpoint(endpoint)
+                    .withCredentials(credentials)
+                    .withClientId(clientId)
+                    .withCognitoClient(AWSCognitoIdentityProviderClientBuilder.standard()
+                            .withRegion(Regions.US_EAST_1)
+                            .withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials))
+                            .build())
                     .build();
 
             List<String> s3Files = new ArrayList<>();
