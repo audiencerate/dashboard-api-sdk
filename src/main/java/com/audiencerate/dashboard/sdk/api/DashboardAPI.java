@@ -1,7 +1,6 @@
 package com.audiencerate.dashboard.sdk.api;
 
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
-import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import com.audiencerate.dashboard.sdk.api.enums.HttpMethod;
 import com.audiencerate.dashboard.sdk.api.exceptions.DashboardAuthException;
 import com.audiencerate.dashboard.sdk.api.exceptions.DashboardHttpException;
@@ -23,7 +22,6 @@ import java.util.Objects;
 
 public class DashboardAPI
 {
-
     private String endpoint;
     private OkHttpClient httpClient;
     private DashboardCredentials credentials;
@@ -41,11 +39,7 @@ public class DashboardAPI
     {
         credentials = builder.credentials;
         clientId = builder.clientId;
-
-        client =  AWSCognitoIdentityProviderClientBuilder
-                .standard()
-                .withRegion(credentials.getRegion())
-                .build();
+        client =  builder.cognitoClient;
 
         CognitoAuthenticator cognitoAuthenticator = new CognitoAuthenticator(credentials, clientId, client);
 
@@ -169,7 +163,7 @@ public class DashboardAPI
             }
             else if (response.code() == 401)
             {
-               throw new DashboardAuthException( this.map(DashboardAuthFailResponse.class, response).getMessage());
+                throw new DashboardAuthException( this.map(DashboardAuthFailResponse.class, response).getMessage());
             }
             //TODO: handle 403 error from dash
             else {
@@ -209,11 +203,10 @@ public class DashboardAPI
     }
 
     public static final class Builder {
-        private OkHttpClient httpClient;
+        private AWSCognitoIdentityProvider cognitoClient;
         private DashboardCredentials credentials;
         private String endpoint;
         private String clientId;
-
 
         private Builder()
         {
@@ -222,6 +215,12 @@ public class DashboardAPI
         public Builder withCredentials(DashboardCredentials val)
         {
             credentials = val;
+            return this;
+        }
+
+        public Builder withCognitoClient(AWSCognitoIdentityProvider val)
+        {
+            cognitoClient = val;
             return this;
         }
 

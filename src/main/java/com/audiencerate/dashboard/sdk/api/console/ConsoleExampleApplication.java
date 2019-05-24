@@ -1,6 +1,9 @@
 package com.audiencerate.dashboard.sdk.api.console;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
+import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import com.audiencerate.dashboard.sdk.api.DashboardAPI;
 import com.audiencerate.dashboard.sdk.api.exceptions.DashboardHttpException;
 import com.audiencerate.dashboard.sdk.api.exceptions.DashboardMappingException;
@@ -25,20 +28,27 @@ public class ConsoleExampleApplication
 
         /*** First Step: Cognito Login: ***/
 
-         String email = "YOUR_EMAIL";
-         String password = "YOUR_PASSWORD";
-         String endpoint = "END_POINT";
-         String clientId = "CLIENT_ID";
+        BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials("YOUR_ACCESS_KEY", "YOUR_SECRET_KEY");
 
-         /*** Note that as default we use the US_EAST_REGION ***/
-
-         DashboardCredentials credentials = new DashboardCredentials(email, password, Regions.US_EAST_1);
+        String email = "YOUR_EMAIL";
+        String password = "YOUR_PASSWORD";
+        String clientId = "THE_CLIENT_ID";
+        String endpoint = "END_POINT";
 
 
-         DashboardAPI dashboardAPI  = DashboardAPI.newBuilder()
+        /*** Note that as default we use the US_EAST_REGION ***/
+
+        DashboardCredentials credentials = new DashboardCredentials(email, password, Regions.US_EAST_1);
+
+
+        DashboardAPI dashboardAPI  = DashboardAPI.newBuilder()
                 .withEndpoint(endpoint)
                 .withCredentials(credentials)
                 .withClientId(clientId)
+                .withCognitoClient(AWSCognitoIdentityProviderClientBuilder.standard()
+                        .withRegion(Regions.US_EAST_1)
+                        .withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials))
+                        .build())
                 .build();
 
 
