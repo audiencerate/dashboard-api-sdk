@@ -173,9 +173,9 @@ public class ConsoleExampleUploader
             s3Files.add("s3://BUCKET_NAME/partner=PARTNER_ID/A_FILE.csv");
 
             Map<String, Object> notificationMap = new HashMap<>();
-            notificationMap.put("audience_id", "AN_AUDIENCE_ID");
-            notificationMap.put("cookie_type", "A_COOKIE_TYPE");
-            notificationMap.put("file_list", s3Files);
+            notificationMap.put("audienceId", "AN_AUDIENCE_ID");
+            notificationMap.put("cookieType", "A_COOKIE_TYPE");
+            notificationMap.put("fileList", s3Files);
 
             DashboardPostRequest postRequest = new DashboardPostRequest()
                     .withData(notificationMap)
