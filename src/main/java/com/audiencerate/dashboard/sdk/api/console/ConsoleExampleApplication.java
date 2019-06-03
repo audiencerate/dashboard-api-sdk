@@ -59,7 +59,7 @@ public class ConsoleExampleApplication
         getMap.put("offset", 0);
         getMap.put("size", 10);
         getMap.put("filter", "");
-        getMap.put("sort", "audience_name");
+        getMap.put("sort", "audienceName");
         getMap.put("sortOrder", "asc");
 
         DashboardGetRequest getRequest = new DashboardGetRequest()
@@ -97,7 +97,7 @@ public class ConsoleExampleApplication
         /*** Build a POST request for an Audience ***/
 
         Map<String, Object> postMap = new HashMap<>();
-        postMap.put("audience_name", "PovaTestBelloAudience");
+        postMap.put("audienceName", "PovaTestBelloAudience");
 
         DashboardPostRequest postRequest =  new DashboardPostRequest()
                 .withPath("/audience")
