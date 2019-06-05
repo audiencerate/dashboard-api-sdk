@@ -97,7 +97,9 @@ public class ConsoleExampleApplication
         /*** Build a POST request for an Audience ***/
 
         Map<String, Object> postMap = new HashMap<>();
-        postMap.put("audienceName", "PovaTestBelloAudience");
+        postMap.put("audienceName", "TestAudience");
+        postMap.put("branded", 1);                           // optional parameter
+        postMap.put("description", "Audience description");  // optional parameter
 
         DashboardPostRequest postRequest =  new DashboardPostRequest()
                 .withPath("/audience")
