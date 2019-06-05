@@ -18,6 +18,24 @@ public class Audience
     private long creation;
     private int durationInDays;
     private int size = -1;
+    private int branded ;
+    private String description;
+
+    public int getBranded() {
+        return branded;
+    }
+
+    public void setBranded(int branded) {
+        this.branded = branded;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getAudienceId()
     {
@@ -87,13 +105,19 @@ public class Audience
         this.size = size;
     }
 
-    public String toString()
-    {
-        return  this.getAudienceId() + " " +
-                this.getPartnerId() + " " +
-                this.getAudienceName() + " " +
-                this.getIntegrationCode() + " " +
-                this.getCreation() + " " +
-                this.getDurationInDays();
+
+    @Override
+    public String toString() {
+        return "Audience{" +
+                "audienceId='" + audienceId + '\'' +
+                ", partnerId='" + partnerId + '\'' +
+                ", audienceName='" + audienceName + '\'' +
+                ", integrationCode='" + integrationCode + '\'' +
+                ", creation=" + creation +
+                ", durationInDays=" + durationInDays +
+                ", size=" + size +
+                ", branded=" + branded +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
