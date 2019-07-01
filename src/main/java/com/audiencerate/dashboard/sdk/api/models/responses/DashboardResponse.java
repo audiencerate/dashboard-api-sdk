@@ -13,6 +13,15 @@ public abstract class DashboardResponse<B> implements IDashboardResponse<B>
     private String status;
     private List<String> messages;
     private String httpStatus;
+    private String requestId = null;
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
 
     @Override
     public <T> T getBody(Class<T> clazz) throws DashboardMappingException
