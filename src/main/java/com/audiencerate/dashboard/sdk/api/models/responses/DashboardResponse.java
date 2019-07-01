@@ -2,11 +2,12 @@ package com.audiencerate.dashboard.sdk.api.models.responses;
 
 import com.audiencerate.dashboard.sdk.api.exceptions.DashboardMappingException;
 import com.audiencerate.dashboard.sdk.api.interfaces.IDashboardResponse;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class DashboardResponse<B> implements IDashboardResponse<B>
 {
     private B body;
