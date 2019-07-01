@@ -15,4 +15,6 @@ public interface IDashboardResponse<B> extends IResponse
     void setMessages(List<String> messages);
     <T> T getBody(Class<T> clazz) throws DashboardMappingException;
     <T> List<T> getBodyAsList(Class<T> clazz) throws DashboardMappingException;
+    String getRequestId();
+    void setRequestId(String requestId);
 }

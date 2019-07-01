@@ -9,4 +9,6 @@ public interface IResponse
     void setStatus(String status);
     String getHttpStatus();
     void setHttpStatus(String httpStatus);
+    String getRequestId();
+    void setRequestId(String requestId);
 }

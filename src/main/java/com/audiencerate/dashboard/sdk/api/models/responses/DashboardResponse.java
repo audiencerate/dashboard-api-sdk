@@ -2,17 +2,27 @@ package com.audiencerate.dashboard.sdk.api.models.responses;
 
 import com.audiencerate.dashboard.sdk.api.exceptions.DashboardMappingException;
 import com.audiencerate.dashboard.sdk.api.interfaces.IDashboardResponse;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class DashboardResponse<B> implements IDashboardResponse<B>
 {
     private B body;
     private String status;
     private List<String> messages;
     private String httpStatus;
+    private String requestId = null;
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
 
     @Override
     public <T> T getBody(Class<T> clazz) throws DashboardMappingException
