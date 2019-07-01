@@ -1,4 +1,4 @@
-package com.audiencerate.dashboard.sdk.api.console;
+package com.audiencerate.dashboard.sdk.api.examples;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -16,24 +16,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Alex Sangiuliano
- */
-
 public class ConsoleExampleApplication
 {
     public static void main(String... args)
     {
-        /*** This is a console application built as tutorial ***/
+        /*** This is a examples application built as tutorial ***/
 
         /*** First Step: Cognito Login: ***/
 
-        BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials("YOUR_ACCESS_KEY", "YOUR_SECRET_KEY");
+        BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials("IAM_ACCESS_KEY", "IAM_SECRET_KEY");
 
-        String email = "YOUR_EMAIL";
-        String password = "YOUR_PASSWORD";
-        String clientId = "THE_CLIENT_ID";
-        String endpoint = "END_POINT";
+        String email = "COGNITO_USER_EMAIL";
+        String password = "COGNITO_USER_PASSWORD";
+        String clientId = "COGNITO_CLIENT_ID";
+        String endpoint = "API_ENDPOINT";
 
 
         /*** Note that as default we use the US_EAST_REGION ***/
@@ -97,7 +93,7 @@ public class ConsoleExampleApplication
         /*** Build a POST request for an Audience ***/
 
         Map<String, Object> postMap = new HashMap<>();
-        postMap.put("audienceName", "TestAudience");
+        postMap.put("audienceName", "Audience Name");
         postMap.put("branded", 1);                           // optional parameter
         postMap.put("description", "Audience description");  // optional parameter
 
