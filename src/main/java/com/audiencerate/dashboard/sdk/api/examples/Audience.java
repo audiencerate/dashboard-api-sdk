@@ -1,4 +1,4 @@
-package com.audiencerate.dashboard.sdk.api.console;
+package com.audiencerate.dashboard.sdk.api.examples;
 
 /**
  * Created by Alex Sangiuliuano

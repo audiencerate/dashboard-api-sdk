@@ -1,4 +1,4 @@
-package com.audiencerate.dashboard.sdk.api.console;
+package com.audiencerate.dashboard.sdk.api.examples;
 
 import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
@@ -28,11 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Alex Sangiuliano
- */
-
-
 public class ConsoleExampleUploader
 {
     public static void main (String... args)
@@ -42,18 +37,18 @@ public class ConsoleExampleUploader
          * FIRST STEP: Get the aws security token, assume the IAM role and start a session;
          */
 
-        BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials("YOUR_ACCESS_KEY", "YOUR_SECRET_KEY");
+        BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials("IAM_ACCESS_KEY", "IAM_SECRET_KEY");
 
-        String clientRegion = "THE_AWS_REGION";
-        String roleARN = "THE_ROLE_ARN";
-        String roleSessionName = "THE_ROLE_SESSION_NAME";
+        String clientRegion = "AWS_REGION";
+        String roleARN = "AWS_ROLE_ARN";
+        String roleSessionName = "AWS_ROLE_SESSION_NAME";
         String bucketName = "THE_BUCKET_NAME";
         String file = "THE_FILE_TO_UPLOAD";
 
-        String email = "YOUR_EMAIL";
-        String password = "YOUR_PASSWORD";
-        String clientId = "THE_CLIENT_ID";
-        String endpoint = "END_POINT";
+        String email = "COGNITO_USER_EMAIL";
+        String password = "COGNITO_USER_PASSWORD";
+        String clientId = "COGNITO_CLIENT_ID";
+        String endpoint = "API_ENDPOINT";
 
         try
         {
