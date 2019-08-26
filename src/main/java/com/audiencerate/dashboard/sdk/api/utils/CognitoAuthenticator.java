@@ -75,8 +75,8 @@ public class CognitoAuthenticator implements Authenticator
 
 
         // ISSUE - refreshing also when getting 400 expire token
-        if ( ( (response.message() != null && response.message().toLowerCase().contains("expired") && response.code() >= 400)
-                || response.code() == 401) && response.request().header(header) != null)
+        if ( (response.message() != null && response.message().toLowerCase().contains("expired") && response.code() >= 400)
+           || response.code() == 401 && response.request().header(header) != null )
         {
             InitiateAuthRequest authRequest = new InitiateAuthRequest();
             authRequest.addAuthParametersEntry("REFRESH_TOKEN", DashboardAPI.refreshToken);
