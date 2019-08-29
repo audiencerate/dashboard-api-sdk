@@ -56,6 +56,7 @@ public class CognitoAuthenticator implements Authenticator
             }
             catch (RuntimeException e)
             {
+                e.printStackTrace();
                 System.out.println("Login Error: " + e.getMessage());
                 return null;
             }
@@ -78,6 +79,7 @@ public class CognitoAuthenticator implements Authenticator
         if ( (response.message() != null && response.message().toLowerCase().contains("expired") && response.code() >= 400)
            || response.code() == 401 && response.request().header(header) != null )
         {
+
             InitiateAuthRequest authRequest = new InitiateAuthRequest();
             authRequest.addAuthParametersEntry("REFRESH_TOKEN", DashboardAPI.refreshToken);
             authRequest.setClientId(clientId);
@@ -91,12 +93,17 @@ public class CognitoAuthenticator implements Authenticator
             }
             catch (RuntimeException e)
             {
+                e.printStackTrace();
                 System.out.println("Login Error: " + e.getMessage());
                 return null;
             }
+
             AuthenticationResultType authenticationResult = initiateAuthResult.getAuthenticationResult();
             DashboardAPI.accessToken = authenticationResult.getAccessToken();
-            DashboardAPI.refreshToken = authenticationResult.getRefreshToken();
+            // fix: check if Cognito returns the refesh token: the refresh token can be null if it's not expired already, so reuse the old refresh for all
+            // the other sessions. If Cognito returns a token it'll be replaced with a new one (refreshToken has a default of 30 days of expiration)
+            if(authenticationResult.getRefreshToken() != null )
+                DashboardAPI.refreshToken = authenticationResult.getRefreshToken();
             DashboardAPI.tokenId = authenticationResult.getIdToken();
 
             fixedRequest = response.request().newBuilder().removeHeader(header)
