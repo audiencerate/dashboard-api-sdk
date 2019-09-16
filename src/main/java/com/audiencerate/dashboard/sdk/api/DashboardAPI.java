@@ -165,9 +165,9 @@ public class DashboardAPI
             {
                 throw new DashboardAuthException( this.map(DashboardAuthFailResponse.class, response).getMessage());
             }
-            //TODO: handle 403 error from dash
+            // for other errors:
             else {
-                throw new DashboardHttpException("Response with status code: " + response.message(), response.code());
+                throw new DashboardHttpException(this.map(DashboardAuthFailResponse.class, response).getMessage(), response.code());
             }
 
         }
