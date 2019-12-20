@@ -1,14 +1,5 @@
 package com.audiencerate.dashboard.sdk.api.examples;
 
-/**
- * Created by Alex Sangiuliuano
- */
-
-/**
- * This is a Pojo object to map responses. Actually ( 21/05/2019 )
- * it covers everything.
- */
-
 public class Audience
 {
     private String audienceId;
@@ -17,7 +8,8 @@ public class Audience
     private String integrationCode;
     private long creation;
     private int durationInDays;
-    private int size = -1;
+    private int sizeAr = -1;
+    private int sizeDdp = -1;
     private int branded ;
     private String description;
 
@@ -95,16 +87,21 @@ public class Audience
         this.durationInDays = durationInDays;
     }
 
-    public int getSize()
-    {
-        return size;
+    public int getSizeAr() {
+        return sizeAr;
     }
 
-    public void setSize(int size)
-    {
-        this.size = size;
+    public void setSizeAr(int sizeAr) {
+        this.sizeAr = sizeAr;
     }
 
+    public int getSizeDdp() {
+        return sizeDdp;
+    }
+
+    public void setSizeDdp(int sizeDdp) {
+        this.sizeDdp = sizeDdp;
+    }
 
     @Override
     public String toString() {
@@ -115,7 +112,8 @@ public class Audience
                 ", integrationCode='" + integrationCode + '\'' +
                 ", creation=" + creation +
                 ", durationInDays=" + durationInDays +
-                ", size=" + size +
+                ", sizeAr=" + sizeAr +
+                ", sizeDdp=" + sizeDdp +
                 ", branded=" + branded +
                 ", description='" + description + '\'' +
                 '}';
