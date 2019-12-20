@@ -10,6 +10,7 @@ import com.audiencerate.dashboard.sdk.api.exceptions.DashboardMappingException;
 import com.audiencerate.dashboard.sdk.api.models.DashboardCredentials;
 import com.audiencerate.dashboard.sdk.api.models.requests.DashboardGetRequest;
 import com.audiencerate.dashboard.sdk.api.models.responses.DashboardListResponse;
+import com.audiencerate.dashboard.sdk.api.models.responses.DashboardResponse;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,6 +78,31 @@ public class ConsoleExampleApplicationTest {
 
         Assert.assertTrue( response != null );
         Assert.assertTrue( "SUCCESS".equals(response.getStatus()) );
+
+
+
+
+
+
+        /*** GET import ***/
+
+        getMap = new HashMap<>();
+        getRequest = new DashboardGetRequest()
+                .withPath("/event/import")
+                .withData(getMap);
+        DashboardResponse response2 = null;
+        try
+        {
+            response2 = dashboardAPI.call(getRequest);
+        }
+        catch (DashboardHttpException | DashboardMappingException e)
+        {
+            e.printStackTrace();
+        }
+
+
+        Assert.assertTrue( response2 != null );
+        Assert.assertTrue( "SUCCESS".equals(response2.getStatus()) );
 
     }
 
